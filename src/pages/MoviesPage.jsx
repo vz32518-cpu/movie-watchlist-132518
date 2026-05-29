@@ -25,10 +25,6 @@ function MoviesPage() {
             !title.trim() ||
             !director.trim()
         ) {
-            alert(
-                "Title and Director required"
-            );
-
             return;
         }
 
@@ -51,12 +47,43 @@ function MoviesPage() {
         setWatched(false);
     };
 
+    const toggleWatched = (id) => {
+
+        setMovieList(
+
+            movieList.map((movie) =>
+
+                movie.id === id
+                    ? {
+                        ...movie,
+                        watched:
+                            !movie.watched,
+                    }
+                    : movie
+
+            )
+
+        );
+
+    };
+
+    const deleteMovie = (id) => {
+
+        setMovieList(
+
+            movieList.filter(
+
+                (movie) =>
+                    movie.id !== id
+
+            )
+
+        );
+
+    };
+
     return (
         <div className="p-8">
-
-            <h1 className="text-3xl mb-6">
-                Movies
-            </h1>
 
             <form
                 onSubmit={addMovie}
@@ -135,6 +162,26 @@ function MoviesPage() {
                             ? "Watched"
                             : "Not Watched"}
                     </p>
+
+                    <button
+                        onClick={() =>
+                            toggleWatched(
+                                movie.id
+                            )
+                        }
+                    >
+                        Toggle Watched
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            deleteMovie(
+                                movie.id
+                            )
+                        }
+                    >
+                        Delete
+                    </button>
 
                 </div>
 
