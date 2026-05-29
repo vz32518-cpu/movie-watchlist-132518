@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/movies" element={<MoviesPage />} />
-        {/* TODO: add a wildcard route that handles unknown paths */}
+          <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   )
