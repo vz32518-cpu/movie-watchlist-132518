@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MoviesPage from './pages/MoviesPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
