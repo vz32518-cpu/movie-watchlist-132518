@@ -2,7 +2,6 @@ import { useState } from "react";
 import { movies as initialMovies } from "../utils/movies";
 
 function MoviesPage() {
-
     const [movieList, setMovieList] =
         useState(initialMovies);
 
@@ -21,10 +20,10 @@ function MoviesPage() {
     const addMovie = (e) => {
         e.preventDefault();
 
-        if (
-            !title.trim() ||
-            !director.trim()
-        ) {
+        if (!title.trim() || !director.trim()) {
+            alert(
+                "Title and Director required"
+            );
             return;
         }
 
@@ -83,111 +82,168 @@ function MoviesPage() {
     };
 
     return (
-        <div className="p-8">
 
-            <form
-                onSubmit={addMovie}
-                className="flex flex-col gap-3 mb-8"
-            >
+        <div className="min-h-screen bg-slate-100 py-10">
 
-                <input
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(e.target.value)
-                    }
-                />
+            <div className="max-w-5xl mx-auto px-6">
 
-                <input
-                    placeholder="Director"
-                    value={director}
-                    onChange={(e) =>
-                        setDirector(e.target.value)
-                    }
-                />
+                <h1 className="text-4xl font-bold mb-8 text-slate-800">
+                    Movie Watchlist
+                </h1>
 
-                <input
-                    placeholder="Genre"
-                    value={genre}
-                    onChange={(e) =>
-                        setGenre(e.target.value)
-                    }
-                />
+                <div className="bg-white p-6 rounded-xl shadow-md mb-10">
 
-                <label>
+                    <h2 className="text-xl font-semibold mb-5">
+                        Add New Movie
+                    </h2>
 
-                    <input
-                        type="checkbox"
-                        checked={watched}
-                        onChange={(e) =>
-                            setWatched(
-                                e.target.checked
-                            )
-                        }
-                    />
-
-                    Watched
-
-                </label>
-
-                <button>
-                    Add Movie
-                </button>
-
-            </form>
-
-            {movieList.map((movie) => (
-
-                <div
-                    key={movie.id}
-                    className="border p-4 mb-4"
-                >
-
-                    <h2>{movie.title}</h2>
-
-                    <p>
-                        Director:
-                        {" "}
-                        {movie.director}
-                    </p>
-
-                    <p>
-                        Genre:
-                        {" "}
-                        {movie.genre}
-                    </p>
-
-                    <p>
-                        {movie.watched
-                            ? "Watched"
-                            : "Not Watched"}
-                    </p>
-
-                    <button
-                        onClick={() =>
-                            toggleWatched(
-                                movie.id
-                            )
-                        }
+                    <form
+                        onSubmit={addMovie}
+                        className="grid md:grid-cols-2 gap-4"
                     >
-                        Toggle Watched
-                    </button>
 
-                    <button
-                        onClick={() =>
-                            deleteMovie(
-                                movie.id
-                            )
-                        }
-                    >
-                        Delete
-                    </button>
+                        <input
+                            className="border p-3 rounded-lg"
+                            placeholder="Movie Title"
+                            value={title}
+                            onChange={(e) =>
+                                setTitle(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                        <input
+                            className="border p-3 rounded-lg"
+                            placeholder="Director"
+                            value={director}
+                            onChange={(e) =>
+                                setDirector(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                        <input
+                            className="border p-3 rounded-lg"
+                            placeholder="Genre"
+                            value={genre}
+                            onChange={(e) =>
+                                setGenre(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                        <label className="flex items-center gap-3">
+
+                            <input
+                                type="checkbox"
+                                checked={watched}
+                                onChange={(e) =>
+                                    setWatched(
+                                        e.target.checked
+                                    )
+                                }
+                            />
+
+                            Watched
+
+                        </label>
+
+                        <button
+                            className="md:col-span-2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+                        >
+                            Add Movie
+                        </button>
+
+                    </form>
 
                 </div>
 
-            ))}
+                <div className="grid gap-5">
+
+                    {movieList.map((movie) => (
+
+                        <div
+                            key={movie.id}
+                            className="bg-white rounded-xl shadow-md p-6"
+                        >
+
+                            <div className="flex justify-between">
+
+                                <div>
+
+                                    <h2 className="text-2xl font-bold">
+                                        {movie.title}
+                                    </h2>
+
+                                    <p className="mt-2">
+                                        Director:
+                                        {" "}
+                                        {movie.director}
+                                    </p>
+
+                                    <p>
+                                        Genre:
+                                        {" "}
+                                        {movie.genre}
+                                    </p>
+
+                                </div>
+
+                                <span
+                                    className={`px-3 py-1 rounded-full text-sm h-fit ${
+                                        movie.watched
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-yellow-100 text-yellow-700"
+                                    }`}
+                                >
+
+                  {movie.watched
+                      ? "Watched"
+                      : "Not Watched"}
+
+                </span>
+
+                            </div>
+
+                            <div className="flex gap-3 mt-6">
+
+                                <button
+                                    onClick={() =>
+                                        toggleWatched(
+                                            movie.id
+                                        )
+                                    }
+                                    className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                                >
+                                    Toggle Status
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        deleteMovie(
+                                            movie.id
+                                        )
+                                    }
+                                    className="bg-red-600 text-white px-4 py-2 rounded-lg"
+                                >
+                                    Delete
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+            </div>
 
         </div>
+
     );
 }
 
